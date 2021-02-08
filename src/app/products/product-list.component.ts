@@ -9,6 +9,7 @@ export class ProductListComponent{
     toggleImage(): void {
         this.showImage = !this.showImage;
     } ;
+    listFilter: string = ' ';
     showImage: boolean = false;
     pageTitle: string = 'Product List';
     imageWidth: number = 50;

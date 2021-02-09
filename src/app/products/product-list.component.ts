@@ -8,17 +8,35 @@ import { IProduct } from './IProduct';
 })
 
 export class ProductListComponent implements OnInit {
+  constructor(){
+    this.filteredProducts = this.products;
+  }
+
   ngOnInit(): void {
     console.log('OnInit Method not implemented.');
   };
   toggleImage(): void {
     this.showImage = !this.showImage;
   };
-  listFilter: string = ' ';
+
+  _listFilter: string = '';
+  get listFilter(): string {
+    return this._listFilter;
+  }
+
+  set listFilter(value: string) {
+    this._listFilter = value;
+    this.filteredProducts = this.listFilter ?
+      this.products.filter((product: IProduct) =>
+        product.productName.toLowerCase().includes(this.listFilter.toLowerCase()))
+      : this.products;
+  }
+
   showImage: boolean = false;
   pageTitle: string = 'Product List';
   imageWidth: number = 50;
   imageMargin: number = 2;
+  filteredProducts: IProduct[] = [];
   products: IProduct[] = [
     {
       "productId": 1,

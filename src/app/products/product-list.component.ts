@@ -8,18 +8,25 @@ import { IProduct } from './IProduct';
 })
 
 export class ProductListComponent implements OnInit {
-  constructor(){
+  constructor() {
     this.filteredProducts = this.products;
   }
 
   ngOnInit(): void {
     console.log('OnInit Method not implemented.');
   };
+
+
   toggleImage(): void {
     this.showImage = !this.showImage;
   };
 
+  onRatingClicked(rating: number): void {
+    this.pageTitle = 'Product List: ' + rating;
+  }
+
   _listFilter: string = '';
+
   get listFilter(): string {
     return this._listFilter;
   }

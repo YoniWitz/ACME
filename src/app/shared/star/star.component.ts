@@ -9,7 +9,7 @@ export class StarComponent implements OnInit {
     @Output() onRatingClicked: EventEmitter<number> = new EventEmitter<number>();
     starWidth: number;
 
- 
+
     ngOnInit(): void {
         this.starWidth = this.rating * 75 / 5
     }

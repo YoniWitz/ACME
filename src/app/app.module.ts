@@ -7,6 +7,16 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star/star.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { Route, RouterModule, Routes } from '@angular/router';
+import { WelcomeComponent } from './welcome/welcome.component';
+
+let arrayOfRoutes: Route[] = [
+  { path: 'products', component: ProductListComponent },
+  { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'welcome', component: WelcomeComponent },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: '**', redirectTo: 'welcome' }
+];
 
 @NgModule({
   declarations: [
@@ -15,13 +25,17 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     StarComponent,
     ConvertToSpacesPipe,
     ProductDetailsComponent,
-    //WelcomeComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(arrayOfRoutes)
   ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
+

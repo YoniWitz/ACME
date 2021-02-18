@@ -1,5 +1,45 @@
-<div class = 'card' *ngIf='product'>
-    <div class='card-dearder'>
-        {{pageTitle + ': ' + product.productName}}
+<div class='card'
+     *ngIf='product'>
+    <div class='card-header'>
+       Details Page
+    </div>
+    <div class='table-responsive'>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>
+                        <button (click)='toggleImage()'
+                                class='btn btn-primary'>
+                            {{showImage ? 'Hide' : 'Show'}} Image
+                        </button>
+                    </th>
+                    <th>Product</th>
+                    <th>Code</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>5 Star Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img *ngIf='showImage'
+                             src={{product.imageUrl}}
+                             title={{product.productName}}
+                             style.width.px={{imageWidth}}
+                             style.margin.px={{imageMargin}}>
+                    </td>
+                    <td>
+                        {{product.productName}}
+                    </td>
+                    <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
+                    <td>{{product.releaseDate}}</td>
+                    <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td>
+                    <td>
+                        <pm-star [rating]='product.starRating'></pm-star>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
 </div>

@@ -1,9 +1,8 @@
-<div class='card'
-     >
+<div class='card'>
     <div class='card-header'>
-       Details Page {{rating}}
+        Details Page {{rating}}
     </div>
-    <div class='table-responsive' >
+    <div class='table-responsive'>
         <table class='table'>
             <thead>
                 <tr>
@@ -36,10 +35,15 @@
                     <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td>
                     <td>
                         <pm-star [rating]='product.starRating'
-                        (onRatingClicked)='onRatingClicked($event)'></pm-star>
+                                 (onRatingClicked)='onRatingClicked($event)'></pm-star>
                     </td>
                 </tr>
-
+                <tr>
+                    <button (click)='onBack()'
+                            class='btn btn-outline-secondary'>
+                        <i class='fa fa-chevron-left'></i>Back
+                    </button>
+                </tr>
             </tbody>
         </table>
     </div>

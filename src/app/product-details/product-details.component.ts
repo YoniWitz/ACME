@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from '../products/IProduct';
 import { ProductService } from '../products/product.service';
 @Component({
@@ -15,7 +15,7 @@ export class ProductDetailsComponent implements OnInit {
   imageMargin: number = 2;
   rating: string = ' ';
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) { }
+  constructor(private route: ActivatedRoute, private productService: ProductService, private router: Router) { }
 
   toggleImage(): void {
     this.showImage = !this.showImage;
@@ -33,5 +33,9 @@ export class ProductDetailsComponent implements OnInit {
 
   onRatingClicked(rating: number): void {
     this.rating = ': ' + rating;
+  }
+
+  onBack():void{
+    this.router.navigate(['/products']);
   }
 }

@@ -13,6 +13,7 @@ export class ProductDetailsComponent implements OnInit {
   showImage: boolean = false;
   imageWidth: number = 50;
   imageMargin: number = 2;
+  rating: string = ' ';
 
   constructor(private route: ActivatedRoute, private productService: ProductService) { }
 
@@ -28,5 +29,9 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: err => this.errorMessage = err
     });
+  }
+
+  onRatingClicked(rating: number): void {
+    this.rating = ': ' + rating;
   }
 }

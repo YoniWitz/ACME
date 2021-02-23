@@ -1,7 +1,7 @@
 <div class='card'
      >
     <div class='card-header'>
-       Details Page
+       Details Page {{rating}}
     </div>
     <div class='table-responsive' >
         <table class='table'>
@@ -35,7 +35,8 @@
                     <td>{{product.releaseDate}}</td>
                     <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td>
                     <td>
-                        <pm-star [rating]='product.starRating'></pm-star>
+                        <pm-star [rating]='product.starRating'
+                        (onRatingClicked)='onRatingClicked($event)'></pm-star>
                     </td>
                 </tr>
 

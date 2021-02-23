@@ -1,9 +1,9 @@
 <div class='card'
-     *ngIf='product'>
+     >
     <div class='card-header'>
        Details Page
     </div>
-    <div class='table-responsive'>
+    <div class='table-responsive' >
         <table class='table'>
             <thead>
                 <tr>
@@ -20,7 +20,7 @@
                     <th>5 Star Rating</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf='product'>
                 <tr>
                     <td><img *ngIf='showImage'
                              src={{product.imageUrl}}
@@ -31,7 +31,7 @@
                     <td>
                         {{product.productName}}
                     </td>
-                    <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
+                    <td>{{product.productCode | convertToSpaces:'-' | lowercase}}</td>
                     <td>{{product.releaseDate}}</td>
                     <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td>
                     <td>

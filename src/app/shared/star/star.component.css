@@ -5,3 +5,7 @@
 div {
     cursor:pointer;
 }
+
+#ratingDiv{
+    width:75px
+}

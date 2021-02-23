@@ -7,12 +7,14 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star/star.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductDetailsGuard } from './product-details/product-details.guard';
 import { Route, RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 let arrayOfRoutes: Route[] = [
   { path: 'products', component: ProductListComponent },
-  { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'product/:id',
+  canActivate: [ProductDetailsGuard], component: ProductDetailsComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'welcome' }

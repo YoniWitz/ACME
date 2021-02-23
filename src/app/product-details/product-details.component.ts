@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProduct } from '../products/IProduct';
-import { ProductService } from '../products/product.service';
+import { IProduct } from '../shared/IProduct';
+import { ProductService } from '../shared/product.service';
 @Component({
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
@@ -23,9 +23,9 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     let id: number = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProducts().subscribe({
-      next: products => {
-        this.product = products.find(product => product.productId === id);
+    this.productService.getProduct(id).subscribe({
+      next: product => {
+        this.product = product;
       },
       error: err => this.errorMessage = err
     });

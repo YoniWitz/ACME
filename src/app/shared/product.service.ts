@@ -20,7 +20,7 @@ export class ProductService {
     }
 
     getProduct(id: number): Observable<IProduct | undefined> {
-        return this.getProducts().pipe(
+        return this.http.get<IProduct[]>(this.productUrl).pipe(
             map((products: IProduct[]) => products.find(p => p.productId === id)),
             catchError(this.handleError)
         );

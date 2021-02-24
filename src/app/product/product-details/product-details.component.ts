@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProduct } from '../shared/IProduct';
-import { ProductService } from '../shared/product.service';
+import { IProduct } from '../../shared/IProduct';
+import { ProductService } from '../../shared/product.service';
+
 @Component({
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
@@ -35,7 +36,7 @@ export class ProductDetailsComponent implements OnInit {
     this.rating = ': ' + rating;
   }
 
-  onBack():void{
+  onBack(): void {
     this.router.navigate(['/products']);
   }
 }

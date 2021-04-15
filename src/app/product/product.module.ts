@@ -8,6 +8,7 @@ import { ProductDetailsGuard } from './product-details/product-details.guard';
 import {SharedModule} from '../shared/shared.module';
 import { StarComponent } from '../shared/star/star.component';
 import { ConvertToSpacesPipe } from '../shared/convert-to-spaces.pipe';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 
 let arrayOfRoutes: Route[] = [
@@ -25,7 +26,9 @@ let arrayOfRoutes: Route[] = [
      
     StarComponent,
    
-    ConvertToSpacesPipe,  
+    ConvertToSpacesPipe,
+   
+    ProductEditComponent,  
   ],
   imports: [
     RouterModule.forChild(arrayOfRoutes),

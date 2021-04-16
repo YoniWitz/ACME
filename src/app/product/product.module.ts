@@ -6,6 +6,7 @@ import { ProductListComponent } from './products/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductDetailsGuard } from './product-details/product-details.guard';
+import { ProductEditGuard } from './product-edit/product-edit.guard';
 
 import { SharedModule } from '../shared/shared.module';
 import { StarComponent } from '../shared/star/star.component';
@@ -16,11 +17,14 @@ let arrayOfRoutes: Route[] = [
   { path: 'products', component: ProductListComponent },
   {
     path: 'products/:id',
-    canActivate: [ProductDetailsGuard], component: ProductEditComponent
+    canActivate: [ProductDetailsGuard], 
+    component: ProductDetailsComponent
   },
   {
-    path: 'product/:id',
-    canActivate: [ProductDetailsGuard], component: ProductDetailsComponent
+    path: 'products/:id/edit',
+    canDeactivate: [ProductEditGuard],
+    canActivate: [ProductEditGuard],
+     component: ProductEditComponent
   }
 ];
 
@@ -28,12 +32,11 @@ let arrayOfRoutes: Route[] = [
   declarations: [
     ProductListComponent,
     ProductDetailsComponent,
+    ProductEditComponent,
 
     StarComponent,
 
-    ConvertToSpacesPipe,
-
-    ProductEditComponent,
+    ConvertToSpacesPipe    
   ],
   imports: [
     RouterModule.forChild(arrayOfRoutes),

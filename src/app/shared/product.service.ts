@@ -25,6 +25,13 @@ export class ProductService {
         );
     }
 
+    deleteProduct(id: number) : Observable<IProduct | undefined>{
+        return this.http.delete<IProduct[]>(this.productUrl).pipe(
+            map((products: IProduct[]) => products.find(p => p.productId === id)),
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(err: HttpErrorResponse) {
         let errorMessage = '';
         if (err.error instanceof ErrorEvent) {

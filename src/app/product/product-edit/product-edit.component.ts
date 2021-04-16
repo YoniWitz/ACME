@@ -1,47 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from 'src/app/shared/IProduct';
 import { ProductService } from 'src/app/shared/product.service';
-
-function range(minValue: number, maxValue: number): ValidatorFn {
-  return (c: AbstractControl): { [key: string]: boolean } | null => {
-    if (c.value != null && (isNaN(c.value) || c.value < minValue || c.value > maxValue)) {
-      return { 'range': true };
-    }
-
-    return null;
-  };
-}
+import {NumberValidators} from 'src/app/shared/number.validator';
 
 @Component({
   selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
+
 export class ProductEditComponent implements OnInit {
   id: number;
   product: IProduct;
   errorMessage: string = '';
   productForm: FormGroup;
   pageTitle = 'Product Edit';
+  sub: any;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProduct(this.id).subscribe({
-      next: product => {
-        this.product = product;
-      },
-      error: err => this.errorMessage = err
-    });
+    this.sub = this.route.paramMap.subscribe(
+      params => {
+        const id= +params.get('id');
+        this.productService.getProduct(id).subscribe({
+          next: product => {
+            this.product = product;
+          },
+          error: err => this.errorMessage = err
+        });
+      }
+    )
+
+    
     this.productForm = this.fb.group({
-      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength]],
+      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       productCode: ['', Validators.required],
-      starRating: ['', range(1,5)],
+      starRating: ['', NumberValidators.range(1,5)],
       description: ''
     })
+  }
+
+  ngOnDestroy(): void{
+    this.sub.unsubscribe();
   }
 
   deleteProduct(): void {

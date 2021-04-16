@@ -42,7 +42,7 @@
                                  style.margin.px={{imageMargin}}>
                         </td>
                         <td>
-                            <a [routerLink]="['/product', filteredProduct.productId]">
+                            <a [routerLink]="['/products', filteredProduct.productId]">
                                 {{filteredProduct.productName}}
                             </a>
                         </td>
@@ -55,7 +55,7 @@
                         </td>
                         <td>
                             <button class="btn btn-outline-primary btn-sm"
-                                    [routerLink]="['/products', filteredProduct.productId]">
+                                    [routerLink]="['/products', filteredProduct.productId, 'edit']">
                                 Edit
                             </button>
                         </td>

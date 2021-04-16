@@ -5,7 +5,7 @@ import { Route, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { ProductModule } from './product/product.module'
+import { ProductModule } from './product/product.module';
 
 let arrayOfRoutes: Route[] = [
   { path: 'welcome', component: WelcomeComponent },
@@ -18,11 +18,11 @@ let arrayOfRoutes: Route[] = [
     AppComponent,
     WelcomeComponent
   ],
-  imports: [
+  imports: [   
     BrowserModule,
     HttpClientModule,
     ProductModule,
-    RouterModule.forRoot(arrayOfRoutes)
+    RouterModule.forRoot(arrayOfRoutes)  
   ],
   bootstrap: [AppComponent]
 })

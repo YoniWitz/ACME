@@ -12,6 +12,9 @@ import { SharedModule } from '../shared/shared.module';
 import { StarComponent } from '../shared/star/star.component';
 import { ConvertToSpacesPipe } from '../shared/convert-to-spaces.pipe';
 
+import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {ProductData} from '../product/product-data';
+
 
 let arrayOfRoutes: Route[] = [
   { path: 'products', component: ProductListComponent },
@@ -39,6 +42,7 @@ let arrayOfRoutes: Route[] = [
     ConvertToSpacesPipe    
   ],
   imports: [
+    InMemoryWebApiModule.forRoot(ProductData),
     RouterModule.forChild(arrayOfRoutes),
     SharedModule,
     ReactiveFormsModule

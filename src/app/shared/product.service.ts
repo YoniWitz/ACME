@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IProduct } from './IProduct';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { tap, catchError, find, map } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +12,7 @@ export class ProductService {
     constructor(private http: HttpClient) { };
 
     getProducts(): Observable<IProduct[]> {
+        const url = `${this.productUrl}`;
         return this.http.get<IProduct[]>(this.productUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(this.handleError)
@@ -19,15 +20,17 @@ export class ProductService {
     }
 
     getProduct(id: number): Observable<IProduct | undefined> {
+        const url = `${this.productUrl}/${id}`;
+
         return this.http.get<IProduct[]>(this.productUrl).pipe(
-            map((products: IProduct[]) => products.find(p => p.productId === id)),
+            map((products: IProduct[]) => products.find(p => p.id === id)),
             catchError(this.handleError)
         );
     }
 
     deleteProduct(id: number) : Observable<IProduct | undefined>{
         return this.http.delete<IProduct[]>(this.productUrl).pipe(
-            map((products: IProduct[]) => products.find(p => p.productId === id)),
+            map((products: IProduct[]) => products.find(p => p.id === id)),
             catchError(this.handleError)
         );
     }

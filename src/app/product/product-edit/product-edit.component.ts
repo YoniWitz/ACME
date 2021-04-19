@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 export class ProductEditComponent implements OnInit {
   id: number;
   product: IProduct;
-  errorMessage: '';
+  errorMessage: string;
   productForm: FormGroup;
   pageTitle: string;
   private sub: Subscription;
@@ -25,11 +25,10 @@ export class ProductEditComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.route.paramMap.subscribe(
       params => {
-        const id = +params.get('id');
-        this.getProduct(id);
+        this.id = +params.get('id');
+        this.getProduct(this.id);
       }
     )
-
 
     this.productForm = this.fb.group({
       productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -48,7 +47,6 @@ export class ProductEditComponent implements OnInit {
       next: () => this.router.navigate(['/products']),
       error: err => this.errorMessage = err
     });
-
   }
 
   onCancel(): void {
@@ -56,15 +54,34 @@ export class ProductEditComponent implements OnInit {
   }
 
   saveProduct(): void {
-    const editedProduct:IProduct ={...this.product, ...this.productForm.value};
-    this.productService.updateProduct(editedProduct)
-    .subscribe({
-      next:() => this.onSaveComplete(),
-      error: err=> this.errorMessage = err
-    })
+    if (this.productForm.valid) {
+      if (this.productForm.dirty) {
+        const editedProduct: IProduct = { ...this.product, ...this.productForm.value };
+        if (editedProduct.id === 0) {
+          this.productService.createProduct(editedProduct)
+            .subscribe({
+              next: () => this.onSaveComplete(),
+              error: err => this.errorMessage = err
+            });
+        }
+        else {
+          this.productService.updateProduct(editedProduct)
+            .subscribe({
+              next: () => this.onSaveComplete(),
+              error: err => this.errorMessage = err
+            });
+        }
+      }
+      else {
+        this.onSaveComplete();
+      }
+    }
+    else {
+      this.errorMessage = 'please correct the validation error';
+    }
   }
 
-  onSaveComplete(){
+  onSaveComplete() {
     this.productForm.reset();
     this.router.navigate(['/products']);
   }
@@ -88,14 +105,13 @@ export class ProductEditComponent implements OnInit {
       this.pageTitle = 'Add Product';
     }
     else {
-      this.pageTitle = `Edit Product: ${this.product.productName}`
+      this.pageTitle = `Edit Product: ${this.product.productName}`;
+      this.productForm.patchValue({
+        productName: this.product.productName,
+        productCode: this.product.productCode,
+        starRating: this.product.starRating,
+        description: this.product.description
+      });
     }
-
-    this.productForm.patchValue({
-      productName: this.product.productName,
-      productCode: this.product.productCode,
-      starRating: this.product.starRating,
-      description: this.product.description
-    });
   }
 }

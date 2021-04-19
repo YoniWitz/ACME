@@ -42,12 +42,22 @@ export class ProductService {
         const url = `${this.productUrl}/${product.id}`;
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        return this.http.put<IProduct>(url, product, { headers: headers })
-        .pipe(
-            tap(data => console.log('updateProduct: ' + product.id)),
-            map(() => product),
-            catchError(this.handleError)
-        );
+        return this.http.put<IProduct>(url, product, { headers })
+            .pipe(
+                tap(() => console.log('updateProduct: ' + product.id)),
+                map(() => product),
+                catchError(this.handleError)
+            );
+    }
+
+    createProduct(product: IProduct): Observable<IProduct> {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        product.id = null;//for fake-web-api
+        return this.http.post<IProduct>(this.productUrl, product, { headers })
+            .pipe(
+                tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+                catchError(this.handleError)
+            );
     }
 
     private handleError(err: HttpErrorResponse) {
@@ -64,6 +74,9 @@ export class ProductService {
     }
 
     private initializedProduct(): IProduct {
+        var d = new Date();
+        var datestring = d.toLocaleString('default', { month: 'long', day: '2-digit', year:'numeric'});
+
         return {
             id: 0,
             description: null,
@@ -72,7 +85,7 @@ export class ProductService {
             imageUrl: null,
             price: null,
             productName: null,
-            releaseDate: null
+            releaseDate: datestring
         }
     }
 }

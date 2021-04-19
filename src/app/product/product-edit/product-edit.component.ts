@@ -43,8 +43,9 @@ export class ProductEditComponent implements OnInit {
   }
 
   deleteProduct(): void {
+    if(confirm(`Really delete product: ${this.product.productName}?`))
     this.productService.deleteProduct(this.id).subscribe({
-      next: () => this.router.navigate(['/products']),
+      next: () => this.onSaveComplete(),
       error: err => this.errorMessage = err
     });
   }

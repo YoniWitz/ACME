@@ -32,8 +32,11 @@ export class ProductService {
     }
 
     deleteProduct(id: number): Observable<IProduct | undefined> {
-        return this.http.delete<IProduct[]>(this.productUrl).pipe(
-            map((products: IProduct[]) => products.find(p => p.id === id)),
+        const url = `${this.productUrl}/${id}`;
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+        return this.http.delete<IProduct>(url, { headers }).pipe(
+            tap(() => console.log('delete: ' + JSON.stringify(id))),
             catchError(this.handleError)
         );
     }
@@ -75,7 +78,7 @@ export class ProductService {
 
     private initializedProduct(): IProduct {
         var d = new Date();
-        var datestring = d.toLocaleString('default', { month: 'long', day: '2-digit', year:'numeric'});
+        var datestring = d.toLocaleString('default', { month: 'long', day: '2-digit', year: 'numeric' });
 
         return {
             id: 0,

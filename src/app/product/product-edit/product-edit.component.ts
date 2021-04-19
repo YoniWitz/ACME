@@ -55,8 +55,18 @@ export class ProductEditComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
-  save(): void {
+  saveProduct(): void {
+    const editedProduct:IProduct ={...this.product, ...this.productForm.value};
+    this.productService.updateProduct(editedProduct)
+    .subscribe({
+      next:() => this.onSaveComplete(),
+      error: err=> this.errorMessage = err
+    })
+  }
 
+  onSaveComplete(){
+    this.productForm.reset();
+    this.router.navigate(['/products']);
   }
 
   getProduct(id: number): void {

@@ -20,7 +20,7 @@ export class ProductService {
     }
 
     getProduct(id: number): Observable<IProduct | undefined> {
-        if(id === 0){ // id equals zero when adding a new product
+        if (id === 0) { // id equals zero when adding a new product
             return of(this.initializedProduct());
         }
         const url = `${this.productUrl}/${id}`;
@@ -31,18 +31,23 @@ export class ProductService {
         );
     }
 
-    deleteProduct(id: number) : Observable<IProduct | undefined>{
+    deleteProduct(id: number): Observable<IProduct | undefined> {
         return this.http.delete<IProduct[]>(this.productUrl).pipe(
             map((products: IProduct[]) => products.find(p => p.id === id)),
             catchError(this.handleError)
         );
     }
 
-    updateProduct(product: IProduct) :Observable<IProduct>{
-        const url = `${this.productUrl}/${product}`;
-        const headers = new HttpHeaders({'Content-Type':'application/json'});
+    updateProduct(product: IProduct): Observable<IProduct> {
+        const url = `${this.productUrl}/${product.id}`;
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        return this.http.put<IProduct>(url, product, {headers: headers});
+        return this.http.put<IProduct>(url, product, { headers: headers })
+        .pipe(
+            tap(data => console.log('updateProduct: ' + product.id)),
+            map(() => product),
+            catchError(this.handleError)
+        );
     }
 
     private handleError(err: HttpErrorResponse) {
@@ -58,16 +63,16 @@ export class ProductService {
         return throwError(errorMessage);
     }
 
-    private initializedProduct(): IProduct{
+    private initializedProduct(): IProduct {
         return {
             id: 0,
             description: null,
-            productCode:null,
+            productCode: null,
             starRating: null,
             imageUrl: null,
-            price:null,
-            productName:null,
-            releaseDate:null
+            price: null,
+            productName: null,
+            releaseDate: null
         }
     }
 }
